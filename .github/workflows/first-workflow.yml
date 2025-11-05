@@ -59,3 +59,12 @@ jobs:
       - name: Stop container
         if: always()
         run: docker stop hello-nginx || true
+      
+      - name: Azure test – Get Compute
+        uses: Azure/CLI@v2.1.0
+        with:
+          azcliversion: 2.64.0
+          inlineScript: |
+            az extension add --name ml
+            az configure --defaults group=$GROUP workspace=$WORKSPACE location=$LOCATION
+            az ml compute list
